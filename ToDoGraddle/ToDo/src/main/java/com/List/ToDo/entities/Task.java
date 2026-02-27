@@ -28,8 +28,7 @@ public class Task {
     private LocalDate dtFinal;
 
 
-    public Task(long id, String nome, String descricao, String status, LocalDate dtInicio, LocalDate dtFinal) {
-        this.id = id;
+    public Task(String nome, String descricao, String status, LocalDate dtInicio, LocalDate dtFinal) {
         this.nome = nome;
         this.descricao = descricao;
         this.status = status;

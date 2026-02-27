@@ -1,6 +1,5 @@
 package com.List.ToDo.entities;
 
-import com.List.ToDo.dto.TaskDTO;
 import com.List.ToDo.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
