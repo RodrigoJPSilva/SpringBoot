@@ -19,6 +19,7 @@ public class Pagamento {
     @OneToOne
     @MapsId
     private Pedido pedido;
+
 }
 
 

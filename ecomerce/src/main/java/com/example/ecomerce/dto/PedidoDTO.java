@@ -6,10 +6,15 @@ import com.example.ecomerce.enums.StatusDoPedido;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+
+@Getter
+@Setter
 @AllArgsConstructor
 public class PedidoDTO {
     @NotNull(message = "O id está vazio ou com algum erro")
@@ -19,6 +24,7 @@ public class PedidoDTO {
     @NotBlank(message = "O status não foi definido")
     private StatusDoPedido status;
     private UUID cliente;
+    private UUID pagamento;
 
     public PedidoDTO() {}
 
@@ -27,5 +33,6 @@ public class PedidoDTO {
         this.momento = dto.getMomento();
         this.status = dto.getStatus();
         this.cliente = dto.getCliente().getId();
+        this.pagamento = dto.getPagamento().getId();
     }
 }

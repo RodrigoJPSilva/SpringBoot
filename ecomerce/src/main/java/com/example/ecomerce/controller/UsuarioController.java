@@ -1,41 +1,33 @@
 package com.example.ecomerce.controller;
 
-import com.example.ecomerce.dto.PedidoDTO;
+
 import com.example.ecomerce.entity.Pedido;
-import com.example.ecomerce.services.PedidoService;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.ecomerce.services.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+//import java.net.URI;
 import java.util.UUID;
 
-@Getter
-@Setter
+@RequestMapping("/usuario")
 @RestController
-@RequestMapping("/Pedidos")
-public class PedidoController {
+public class UsuarioController {
 
-    private final PedidoService service;
+    private final UsuarioService service;
 
-    public PedidoController(PedidoService service) {
+    public UsuarioController(UsuarioService service) {
         this.service = service;
     }
 
     @PostMapping(value = "/add")
     public ResponseEntity<Pedido> insert(@RequestBody Pedido dto) {
         dto = service.insert(dto);
-
         // Cria a URL com o ID do novo pedido (Boa prática REST)
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-
-        return ResponseEntity.created(uri).body(dto);
+//        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+//                .buildAndExpand(dto.getId()).toUri();
+//        return ResponseEntity.created(uri).body(dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/del/{id}")
