@@ -11,8 +11,8 @@ public class Usuario {
     private String nome;
     private String email;
 
-    @OneToOne(mappedBy = "carteira", cascade = CascadeType.ALL)
-    private CarteiraBiblioteca usuario;
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private CarteiraBiblioteca carteira;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Emprestimo> emprestimos;
