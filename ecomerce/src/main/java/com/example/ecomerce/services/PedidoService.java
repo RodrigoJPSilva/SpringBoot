@@ -7,8 +7,6 @@ import com.example.ecomerce.enums.StatusDoPedido;
 import com.example.ecomerce.repository.PagamentoRepository;
 import com.example.ecomerce.repository.PedidoRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 
 import java.time.LocalDate;
 import java.util.UUID;
