@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -23,4 +25,15 @@ public class Pedido {
 
     @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
     private  Pagamento pagamento;
+
+    @OneToMany(mappedBy = "id.pedido")
+    private Set<ItemDoPedido> items = new HashSet<>();
+
+    public void setItems(Set<ItemDoPedido> items) {
+        this.items = items;
+    }
+
+    public Set<ItemDoPedido> getItems() {
+        return items;
+    }
 }
