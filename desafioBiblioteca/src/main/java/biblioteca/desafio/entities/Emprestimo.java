@@ -13,7 +13,7 @@ public class Emprestimo {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date dataEmprestimo;
-    private Date dataDevolucao;z
+    private Date dataDevolucao;
 
     @ManyToOne
     @JoinColumn(name = "emprestado_id")
