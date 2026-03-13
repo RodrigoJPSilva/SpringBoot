@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class Pedido {
         this.items = items;
     }
 
-    public Set<ItemDoPedido> getItems() {
-        return items;
+    public List<Produto> getItems() {
+        return items.stream().map(x -> x.getProduto()).toList();
     }
 }
