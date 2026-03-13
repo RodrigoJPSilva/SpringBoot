@@ -10,10 +10,10 @@ import java.util.Date;
 @Setter
 @Entity
 public class Emprestimo {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date dataEmprestimo;
-    private Date dataDevolucao;
+    private Date dataDevolucao;z
 
     @ManyToOne
     @JoinColumn(name = "emprestado_id")
