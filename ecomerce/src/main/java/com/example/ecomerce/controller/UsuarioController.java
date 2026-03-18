@@ -30,6 +30,7 @@ public class UsuarioController {
         return ResponseEntity.ok().body(dto);
     }
 
+
     @DeleteMapping(value = "/del/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.delete(id);
