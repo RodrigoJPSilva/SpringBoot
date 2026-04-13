@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ public class PedidoService {
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado! ID: " + clienteId));
 
         Pedido pedido = new Pedido();
-        pedido.setMomento(LocalDate.now()); // Usa a data atual
+        pedido.setMomento(Instant.now()); // Usa a data atual
         pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO); // Status inicial
         pedido.setCliente(cliente);
 

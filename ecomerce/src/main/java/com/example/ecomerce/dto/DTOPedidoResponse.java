@@ -4,6 +4,7 @@ import com.example.ecomerce.entity.Pedido;
 import com.example.ecomerce.enums.StatusDoPedido;
 import lombok.Getter;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class DTOPedidoResponse {
 
     private UUID id;
-    private LocalDate momento;
+    private Instant momento;
     private StatusDoPedido status;
     private UUID clienteId;
     private String nomeCliente;

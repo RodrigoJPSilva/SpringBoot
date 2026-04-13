@@ -17,7 +17,7 @@ public class Produto {
     private String nome;
     private String descricao;
     private String imgUrl;
-    private String preco;
+    private Double preco;
 
     @ManyToMany
     @JoinTable(name = "tb_produto_categoria",
