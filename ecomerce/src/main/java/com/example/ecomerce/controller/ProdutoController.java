@@ -13,7 +13,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/produtos") // Verifique se no Postman você está usando /produtos
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     @Autowired
