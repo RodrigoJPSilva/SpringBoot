@@ -34,13 +34,12 @@ public class PedidoService {
 
     @Transactional
     public Pedido insert(UUID clienteId) {
-        // Busca o cliente pelo ID
         Usuario cliente = usuarioRepository.findById(clienteId)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado! ID: " + clienteId));
 
         Pedido pedido = new Pedido();
-        pedido.setMomento(Instant.now()); // Usa a data atual
-        pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO); // Status inicial
+        pedido.setMomento(Instant.now());
+        pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO);
         pedido.setCliente(cliente);
 
         return repository.save(pedido);

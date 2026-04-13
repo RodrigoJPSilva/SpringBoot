@@ -1,6 +1,5 @@
 package com.example.ecomerce.dto;
 
-import com.example.ecomerce.entity.ItemDoPedido;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

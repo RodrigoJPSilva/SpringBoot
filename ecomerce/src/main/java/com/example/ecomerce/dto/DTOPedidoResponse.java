@@ -5,7 +5,6 @@ import com.example.ecomerce.enums.StatusDoPedido;
 import lombok.Getter;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Getter
