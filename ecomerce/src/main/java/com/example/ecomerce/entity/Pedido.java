@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -14,10 +15,11 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@Table(name = "tb_pedido")
 public class Pedido {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private LocalDate momento;
+    private Instant momento;
     private StatusDoPedido status;
 
     @ManyToOne
@@ -34,7 +36,7 @@ public class Pedido {
         this.items = items;
     }
 
-    public List<Produto> getItems() {
+    public List<Produto> getProdutos() {
         return items.stream().map(x -> x.getProduto()).toList();
     }
-}
+    }

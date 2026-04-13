@@ -1,6 +1,7 @@
 package com.example.ecomerce.entity;
 
 import com.example.ecomerce.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "tb_usuario")
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,9 +27,15 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
-    @Enumerated(EnumType.STRING)
-    private Role roles;
 
+    // Cria a tabela auxiliar para armazenar a lista de perfis do usuário
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tb_usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private List<Role> roles = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
     private List<Pedido> pedidos = new ArrayList<>();
 }

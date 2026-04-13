@@ -1,30 +1,70 @@
 package com.example.ecomerce.services;
 
-import com.example.ecomerce.entity.Pedido;
 import com.example.ecomerce.entity.Usuario;
-import com.example.ecomerce.repository.PedidoRepository;
+import com.example.ecomerce.enums.Role;
 import com.example.ecomerce.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class UsuarioService {
-    private UsuarioRepository usuarioRepository;
 
-    public Usuario criarUsuario(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = UsuarioService.this.usuarioRepository;
-        return (Usuario) usuarioRepository;
+    @Autowired
+    private UsuarioRepository repository;
+
+    public List<Usuario> findAll() {
+        return repository.findAll();
     }
 
-    public String salvarUsuario(Usuario dto) {
-        Pet pet = new Pet(dto.getNome(), dto.getIdade(), dto.getPorte(), dto.getTipo(), dto.getRaca());
-        usuarioRepository.save(pet);
-
-        return "Pet salvo com sucesso";
+    public Usuario findById(UUID id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado! ID: " + id));
     }
 
-    public void delete(UUID id) {
+    @Transactional
+    public Usuario insert(String nome, String email, String telefone, String senha, List<Role> roles) {
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setTelefone(telefone);
+        usuario.setSenha(senha);
+
+        // Define "USER" como padrão se a requisição vier sem nenhuma role
+        if (roles != null && !roles.isEmpty()) {
+            usuario.getRoles().addAll(roles);
+        } else {
+            usuario.getRoles().add(Role.USER);
+        }
+
+        return repository.save(usuario);
     }
 
-    public Pedido insert(Pedido dto) {
+    @Transactional
+    public Optional<Usuario> update(UUID id, String nome, String email, String telefone) {
+        Optional<Usuario> usuarioExistente = repository.findById(id);
+
+        if (usuarioExistente.isPresent()) {
+            Usuario usuario = usuarioExistente.get();
+            usuario.setNome(nome);
+            usuario.setEmail(email);
+            usuario.setTelefone(telefone);
+
+            return Optional.of(repository.save(usuario));
+        }
+
+        return Optional.empty();
+    }
+
+    public boolean deleteById(UUID id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

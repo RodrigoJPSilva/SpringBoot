@@ -1,65 +1,67 @@
 package com.example.ecomerce.services;
 
-import com.example.ecomerce.dto.PedidoDTO;
-import com.example.ecomerce.entity.Pagamento;
 import com.example.ecomerce.entity.Pedido;
+import com.example.ecomerce.entity.Usuario;
 import com.example.ecomerce.enums.StatusDoPedido;
-import com.example.ecomerce.repository.PagamentoRepository;
 import com.example.ecomerce.repository.PedidoRepository;
+import com.example.ecomerce.repository.UsuarioRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class PedidoService {
 
-    private final PedidoRepository pedidoRepository;
-    private final PagamentoRepository pagamentoRepository;
+    @Autowired
+    private PedidoRepository repository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
-    public PedidoService(PedidoRepository pedidoRepository, PagamentoRepository pagamentoRepository) {
-        this.pedidoRepository = pedidoRepository;
-        this.pagamentoRepository = pagamentoRepository;
+    public List<Pedido> findAll() {
+        return repository.findAll();
     }
 
-    public PedidoDTO criarPedido(PedidoDTO dto) {
+    public Optional<Pedido> findById(UUID id) {
+        return repository.findById(id);
+    }
+
+    @Transactional
+    public Pedido insert(UUID clienteId) {
+        // Busca o cliente pelo ID
+        Usuario cliente = usuarioRepository.findById(clienteId)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado! ID: " + clienteId));
+
         Pedido pedido = new Pedido();
-        pedido.setMomento(LocalDate.now());
-        pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO);
+        pedido.setMomento(LocalDate.now()); // Usa a data atual
+        pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO); // Status inicial
+        pedido.setCliente(cliente);
 
-        Pagamento pagamento = new Pagamento();
-        pedido.setPagamento(pagamento);
-        pedidoRepository.save(pedido);
-        pagamentoRepository.save(pagamento);
-        return new PedidoDTO(pedido);
+        return repository.save(pedido);
     }
 
-    public void delete(UUID id) {
+    @Transactional
+    public Optional<Pedido> atualizarStatus(UUID id, StatusDoPedido novoStatus) {
+        Optional<Pedido> pedidoExistente = repository.findById(id);
 
+        if (pedidoExistente.isPresent()) {
+            Pedido pedido = pedidoExistente.get();
+            pedido.setStatus(novoStatus);
+            return Optional.of(repository.save(pedido));
+        }
+        return Optional.empty();
     }
 
-    public Pedido insert(Pedido dto) {
-        return dto;
+    public boolean deleteById(UUID id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
-
-
-//    public Pedido insert(Pedido pedido) {
-//
-//        pedido.setMomento(LocalDate.now());
-//
-//        if (pedido.getStatus() == null) {
-//            pedido.setStatus(StatusDoPedido.AGUARDANDO_PAGAMENTO);
-//        }
-//
-//        return repository.save(pedido);
-//    }
-//
-//
-//    public void delete(UUID id) {
-//        if (!repository.existsById(id)) {
-//            throw new RuntimeException("Pedido não encontrado para o ID: " + id);
-//        }
-//        repository.deleteById(id);
-//    }
 }

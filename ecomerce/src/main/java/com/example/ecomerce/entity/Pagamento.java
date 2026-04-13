@@ -1,25 +1,26 @@
 package com.example.ecomerce.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.Instant;
 import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "tb_pagamento")
 public class Pagamento {
-//    @Id @GeneratedValue(strategy = GenerationType.UUID)
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    private LocalDate moment;
+    private Instant momento;
 
+    @JsonIgnore
     @OneToOne
-    @MapsId
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
-
 }
-
-

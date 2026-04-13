@@ -1,35 +1,31 @@
 package com.example.ecomerce.entity;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-//import lombok.AllArgsConstructor;
-//import lombok.NoArgsConstructor;
-//import org.springframework.data.annotation.Id;
 
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "pedido_item")
+@Table(name = "tb_item_pedido")
 public class ItemDoPedido {
 
-    @ManyToOne
-    @JoinColumn(name = "pedido_id")
-    private Pedido pedido;
-
-    @OneToMany
-    @JoinColumn(name = "product_id")
-    private Produto produto;
-
+    // A chave composta sendo incorporada aqui
     @EmbeddedId
-    private ItemDoPedido id = new ItemDoPedido();
-    private int quantity;
-    private double price;
+    @EqualsAndHashCode.Include
+    private ItemDoPedidoPK id = new ItemDoPedidoPK();
+
     private Integer quantidade;
     private Double preco;
 
     public ItemDoPedido() {}
 
+    // Construtor prático para facilitar a criação do item no Service
     public ItemDoPedido(Pedido pedido, Produto produto, Integer quantidade, Double preco) {
         id.setPedido(pedido);
         id.setProduto(produto);
@@ -37,6 +33,9 @@ public class ItemDoPedido {
         this.preco = preco;
     }
 
+    // --- MÉTODOS AUXILIARES ---
+
+    @JsonIgnore // Essencial para evitar o loop infinito ao serializar o Pedido em JSON
     public Pedido getPedido() {
         return id.getPedido();
     }
@@ -49,8 +48,7 @@ public class ItemDoPedido {
         id.setProduto(produto);
     }
 
-    public void setPedido(Pedido pedido) {
-        id.setPedido(pedido);
+    public Double getSubTotal() {
+        return preco * quantidade;
     }
-
 }
