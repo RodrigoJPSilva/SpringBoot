@@ -1,72 +1,44 @@
 package com.List.ToDo.service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import com.List.ToDo.dto.TaskDTO;
 import com.List.ToDo.entities.Task;
+import com.List.ToDo.entities.User;
 import com.List.ToDo.repository.TaskRepository;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Getter
-@Setter
 @Service
 public class TaskService {
 
-    private final TaskRepository taskRepository;
+    @Autowired
+    private TaskRepository taskRepository;
 
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    @Autowired
+    private UserService userService;
+
+    public Task createTaskForUser(Long userId, Task task) {
+        User user = userService.findById(userId);
+        task.setUser(user);
+        return taskRepository.save(task);
     }
 
-    @NotNull
-    public TaskDTO criarTask(TaskDTO dto) {
-        Task task = new Task(dto);
-        return dto;
+    public List<Task> listTasksByUser(Long userId) {
+        userService.findById(userId);
+        return taskRepository.findByUserId(userId);
     }
 
-    public Optional<Task> showTaskById(long id) {
+    public Task updateTask(Long taskId, Task updatedData) {
+        Task existingTask = taskRepository.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        return taskRepository.findById(id);
+        existingTask.setTitle(updatedData.getTitle());
+        existingTask.setDescription(updatedData.getDescription());
+        existingTask.setCompleted(updatedData.isCompleted());
+
+        return taskRepository.save(existingTask);
     }
 
-    public List<Task> showAllTasks(@Valid TaskDTO taskDTO){
-        List<Task> tasks = taskRepository.findAll();
-        List<Task> listTasks = new ArrayList<>();
-        listTasks = tasks;
-        
-        return listTasks;
+    public void deleteTask(Long taskId) {
+        taskRepository.deleteById(taskId);
     }
-
-    public String updateTask(long id, TaskDTO dto) {
-        Optional<Task> taskList = taskRepository.findById(id);
-
-        if (taskList.isPresent()) {
-            Task task = taskList.get();
-            task.setNome(dto.getNome());
-            task.setDescricao(dto.getDescricao());
-            task.setStatus(dto.getStatus());
-            task.setDtInicio(dto.getDtInicio());
-            task.setDtFinal(dto.getDtFinal());
-
-            return task.toString();
-        } else {
-            return "Tarefa não encontrada";
-        }
-
-    }
-    public String deleteTaskById(long id) {
-        if (taskRepository.findById(id) != null) {
-            taskRepository.deleteById(id);
-            return "Tarefa deletada com sucesso";
-        }  else {
-            return "Tarefa não encontrada";
-        }
-    }
-
 }
