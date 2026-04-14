@@ -3,35 +3,33 @@ package com.List.ToDo.dto;
 import com.List.ToDo.entities.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO {
-
-    private long id;
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDTORequest {
     @NotBlank(message = "Nome inválido")
-    private String nome;
+    private String name;
     @NotBlank(message = "Email inválido") @Email
     private String email;
     @NotBlank(message = "Senha inválida")
     @Size(min = 6, max = 20, message = "A senha deve ter entre 6 e 20 caracteres ")
-    private String senha;
+    private String password;
 
-    public UserDTO() {
+    public User toEntity() {
+        User user = new User();
+        user.setName(this.name);
+        user.setEmail(this.email);
+        user.setPassword(this.password);
+        return user;
     }
 
-    public UserDTO(User user) {
-        this.nome = user.getNome();
-        this.email = user.getEmail();
-    }
-
-    public UserDTO(long id, String nome, String email, String senha) {
-        this.id = id;
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-    }
 }
+

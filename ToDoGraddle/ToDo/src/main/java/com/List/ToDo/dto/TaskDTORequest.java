@@ -1,4 +1,5 @@
 package com.List.ToDo.dto;
+import com.List.ToDo.entities.Task;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -10,27 +11,23 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class TaskDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class TaskDTORequest {
 
-    @NotNull
-    private long id;
     @NotBlank
-    private String nome;
+    private String title;
     @NotBlank
-    private String descricao;
-    private String status;
-    private LocalDate dtInicio;
-    private LocalDate dtFinal;
+    private String description;
 
-    public TaskDTO() {
+    private boolean completed;
+
+    public Task toEntity() {
+        Task task = new Task();
+        task.setTitle(this.title);
+        task.setDescription(this.description); // You missed this line!
+        task.setCompleted(this.completed);
+        return task;
     }
 
-    public TaskDTO(long id, String nome, String descricao, String status, LocalDate dtInicio, LocalDate dtFinal) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.status = status;
-        this.dtInicio = dtInicio;
-        this.dtFinal = dtFinal;
-    }
 }
