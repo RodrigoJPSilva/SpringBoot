@@ -1,6 +1,5 @@
 package com.List.ToDo.entities;
 
-import com.List.ToDo.dto.UserDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,31 +14,23 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "usuario")
+@Entity
+@Table(name = "usuario")
 public class User {
 
     @Id
     @GeneratedValue
-    private long id;
-    private String nome;
+    private Long id;
+    private String name;
     @Column(unique = true)
     private String email;
-    private String senha;
+    private String password;
 
-    public User (UserDTO dto) {
-        this.nome = dto.getNome();
-        this.email = dto.getEmail();
-        this.senha = dto.getSenha();
-    }
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
-    @JsonIgnore // Evita loop infinito na serialização se buscar tarefas diretamente
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL) // Change "usuario" to "user"
     private List<Task> tasks = new ArrayList<>();
 
     public List<Task> getTask() {
         return tasks;
-    }
-    public void setTasks(List<Task> tasks) {
-    this.tasks = tasks;
     }
 }
