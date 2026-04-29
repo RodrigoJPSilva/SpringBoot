@@ -1,4 +1,4 @@
-package com.example.ecomerce.dto;
+package com.example.ecomerce.dto.response;
 
 import com.example.ecomerce.entity.Usuario;
 import com.example.ecomerce.enums.Role;

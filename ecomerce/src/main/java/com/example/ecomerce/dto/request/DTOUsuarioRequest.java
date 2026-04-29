@@ -1,4 +1,4 @@
-package com.example.ecomerce.dto;
+package com.example.ecomerce.dto.request;
 
 
 import com.example.ecomerce.enums.Role;

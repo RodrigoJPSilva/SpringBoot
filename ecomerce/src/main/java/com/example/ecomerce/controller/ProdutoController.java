@@ -1,6 +1,6 @@
 package com.example.ecomerce.controller;
 
-import com.example.ecomerce.dto.DTOProdutoRequest;
+import com.example.ecomerce.dto.request.DTOProdutoRequest;
 import com.example.ecomerce.entity.Produto;
 import com.example.ecomerce.services.ProdutoService;
 import jakarta.validation.Valid;

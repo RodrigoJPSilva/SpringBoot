@@ -1,8 +1,9 @@
 package com.example.ecomerce.controller;
 
-import com.example.ecomerce.dto.DTOItemDoPedidoRequest;
-import com.example.ecomerce.dto.DTOItemDoPedidoResponse;
+import com.example.ecomerce.dto.request.DTOItemDoPedidoRequest;
+import com.example.ecomerce.dto.response.DTOItemDoPedidoResponse;
 import com.example.ecomerce.entity.ItemDoPedido;
+import com.example.ecomerce.services.ItemDoPedidoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

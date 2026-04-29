@@ -1,7 +1,7 @@
 package com.example.ecomerce.controller;
 
-import com.example.ecomerce.dto.DTOUsuarioRequest;
-import com.example.ecomerce.dto.DTOUsuarioResponse;
+import com.example.ecomerce.dto.request.DTOUsuarioRequest;
+import com.example.ecomerce.dto.response.DTOUsuarioResponse;
 import com.example.ecomerce.entity.Usuario;
 import com.example.ecomerce.services.UsuarioService;
 import jakarta.validation.Valid;

@@ -28,7 +28,7 @@ public class ServiceUsuario {
     public Optional<Usuario> buscarUsuarioPorId(long id) {
         return usuarioRepository.findById(id);
     }
-    
+
 //        CarteiraBiblioteca carteira = new CarteiraBiblioteca();
 //        carteira.setDataEmissao(new Date());
 //        carteira.setValid(true);

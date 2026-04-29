@@ -1,4 +1,4 @@
-package com.example.ecomerce.dto;
+package com.example.ecomerce.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;

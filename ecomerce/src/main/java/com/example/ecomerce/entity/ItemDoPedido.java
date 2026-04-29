@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "tb_item_pedido")
 public class ItemDoPedido {
 
@@ -23,12 +23,10 @@ public class ItemDoPedido {
     private Integer quantidade;
     private Double preco;
 
-    public ItemDoPedido() {}
-
     // Construtor prático para facilitar a criação do item no Service
     public ItemDoPedido(Pedido pedido, Produto produto, Integer quantidade, Double preco) {
-        id.setPedido(pedido);
-        id.setProduto(produto);
+        this.id.setPedido(pedido);
+        this.id.setProduto(produto);
         this.quantidade = quantidade;
         this.preco = preco;
     }

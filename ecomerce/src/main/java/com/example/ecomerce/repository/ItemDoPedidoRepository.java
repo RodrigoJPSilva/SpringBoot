@@ -1,11 +1,11 @@
 package com.example.ecomerce.repository;
 
-import com.example.ecomerce.entity.Categoria;
+import com.example.ecomerce.entity.ItemDoPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface ItemDoPedidoRepository extends JpaRepository<Categoria, UUID> {
+public interface ItemDoPedidoRepository extends JpaRepository<ItemDoPedido, UUID> {
 }

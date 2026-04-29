@@ -1,7 +1,7 @@
 package com.example.ecomerce.controller;
 
-import com.example.ecomerce.dto.DTOPedidoRequest;
-import com.example.ecomerce.dto.DTOPedidoResponse;
+import com.example.ecomerce.dto.request.DTOPedidoRequest;
+import com.example.ecomerce.dto.response.DTOPedidoResponse;
 import com.example.ecomerce.entity.Pedido;
 import com.example.ecomerce.enums.StatusDoPedido;
 import com.example.ecomerce.services.PedidoService;
