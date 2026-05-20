@@ -17,10 +17,8 @@ public class DTOUsuarioResponse {
     private String photo;
     private List<Role> roles;
 
-    // Construtor vazio (boa prática para evitar erros com o Jackson/Spring)
     public DTOUsuarioResponse() {}
 
-    // Construtor recebendo APENAS a entidade (resolve o erro no Controller)
     public DTOUsuarioResponse(Usuario entity) {
         this.id = entity.getId();
         this.nome = entity.getNome();

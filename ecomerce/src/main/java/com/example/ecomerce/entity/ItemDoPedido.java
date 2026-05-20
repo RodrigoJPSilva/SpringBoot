@@ -15,7 +15,6 @@ import lombok.*;
 @Table(name = "tb_item_pedido")
 public class ItemDoPedido {
 
-    // A chave composta sendo incorporada aqui
     @EmbeddedId
     @EqualsAndHashCode.Include
     private ItemDoPedidoPK id = new ItemDoPedidoPK();

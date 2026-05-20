@@ -39,7 +39,7 @@ public class ProdutoController {
 
         if (imagem != null && !imagem.isEmpty()) {
             String pathImagem = photoService.savePhoto(imagem);
-            dto.setImgUrl(pathImagem); // Adiciona o caminho no DTO
+            dto.setImgUrl(pathImagem);
         }
 
         Produto entity = service.insert(dto);

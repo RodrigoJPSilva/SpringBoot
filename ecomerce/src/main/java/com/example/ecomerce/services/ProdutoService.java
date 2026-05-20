@@ -33,7 +33,6 @@ public class ProdutoService {
         entity.setPreco(dto.getPreco());
         entity.setImgUrl(dto.getImgUrl());
 
-        // Vincula as categorias
         for (UUID catId : dto.getCategoriasIds()) {
             Categoria categoria = categoriaRepository.findById(catId)
                     .orElseThrow(() -> new RuntimeException("Categoria não encontrada! ID: " + catId));

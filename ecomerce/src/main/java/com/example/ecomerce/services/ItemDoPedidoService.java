@@ -26,20 +26,11 @@ public class ItemDoPedidoService {
 
     @Transactional
     public ItemDoPedido adicionarItemAoPedido(UUID pedidoId, UUID produtoId, Integer quantidade) {
-
-        // 1. Verifica se o Pedido existe no banco
         Pedido pedido = pedidoRepository.findById(pedidoId)
                 .orElseThrow(() -> new RuntimeException("Pedido não encontrado! ID: " + pedidoId));
-
-        // 2. Verifica se o Produto existe no banco
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado! ID: " + produtoId));
-
-        // 3. Instancia o Item do Pedido
-        // Usamos o construtor que você criou na entidade, e pegamos o preço direto do banco (produto.getPreco())
         ItemDoPedido item = new ItemDoPedido(pedido, produto, quantidade, produto.getPreco());
-
-        // 4. Salva o item na tabela associativa
         return repository.save(item);
     }
 }

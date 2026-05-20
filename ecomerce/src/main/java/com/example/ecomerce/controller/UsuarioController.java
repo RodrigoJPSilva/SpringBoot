@@ -50,19 +50,16 @@ public class UsuarioController {
             @RequestPart("dados") @Valid DTOUsuarioRequest dto,
             @RequestPart(value = "photo", required = false) MultipartFile foto) throws IOException {
 
-        // Salva a imagem no disco se ela foi enviada
         String pathPhoto = null;
         if (foto != null && !foto.isEmpty()) {
             pathPhoto = photoService.savePhoto(foto);
         }
-
-        // Passamos o pathPhoto novo pro service
         Usuario obj = service.insert(
                 dto.getNome(),
                 dto.getEmail(),
                 dto.getTelefone(),
                 dto.getSenha(),
-                pathPhoto, // <-- Passando o caminho da imagem
+                pathPhoto,
                 dto.getRoles()
         );
 

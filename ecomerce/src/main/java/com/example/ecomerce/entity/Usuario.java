@@ -29,7 +29,6 @@ public class Usuario {
     private String senha;
     private String photo;
 
-    // Cria a tabela auxiliar para armazenar a lista de perfis do usuário
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tb_usuario_roles", joinColumns = @JoinColumn(name = "usuario_id"))
     @Enumerated(EnumType.STRING)
