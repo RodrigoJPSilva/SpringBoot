@@ -3,13 +3,17 @@ package com.example.ecomerce.controller;
 import com.example.ecomerce.dto.request.DTOUsuarioRequest;
 import com.example.ecomerce.dto.response.DTOUsuarioResponse;
 import com.example.ecomerce.entity.Usuario;
+import com.example.ecomerce.services.PhotoService;
 import com.example.ecomerce.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +26,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService service;
+
+    @Autowired
+    private PhotoService photoService;
 
     @GetMapping
     public ResponseEntity<List<DTOUsuarioResponse>> encontrarTodos() {
@@ -38,13 +45,24 @@ public class UsuarioController {
         return ResponseEntity.ok().body(new DTOUsuarioResponse(obj));
     }
 
-    @PostMapping
-    public ResponseEntity<DTOUsuarioResponse> insert(@Valid @RequestBody DTOUsuarioRequest dto) {
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<DTOUsuarioResponse> insert(
+            @RequestPart("dados") @Valid DTOUsuarioRequest dto,
+            @RequestPart(value = "photo", required = false) MultipartFile foto) throws IOException {
+
+        // Salva a imagem no disco se ela foi enviada
+        String pathPhoto = null;
+        if (foto != null && !foto.isEmpty()) {
+            pathPhoto = photoService.savePhoto(foto);
+        }
+
+        // Passamos o pathPhoto novo pro service
         Usuario obj = service.insert(
                 dto.getNome(),
                 dto.getEmail(),
                 dto.getTelefone(),
                 dto.getSenha(),
+                pathPhoto, // <-- Passando o caminho da imagem
                 dto.getRoles()
         );
 

@@ -27,6 +27,7 @@ public class Usuario {
     private String email;
     private String telefone;
     private String senha;
+    private String photo;
 
     // Cria a tabela auxiliar para armazenar a lista de perfis do usuário
     @ElementCollection(fetch = FetchType.EAGER)

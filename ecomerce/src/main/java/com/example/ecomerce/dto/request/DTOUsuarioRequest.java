@@ -26,6 +26,8 @@ public class DTOUsuarioRequest {
     @NotBlank(message = "A senha é obrigatória")
     private String senha;
 
+    private String photo;
+
     private List<Role> roles;
 
     // Gere os Getters e Setters!

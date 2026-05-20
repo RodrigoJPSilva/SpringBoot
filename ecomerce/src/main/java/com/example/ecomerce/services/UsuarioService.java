@@ -27,14 +27,15 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario insert(String nome, String email, String telefone, String senha, List<Role> roles) {
+    // Adicionei a String photo nos parâmetros
+    public Usuario insert(String nome, String email, String telefone, String senha, String photo, List<Role> roles) {
         Usuario usuario = new Usuario();
         usuario.setNome(nome);
         usuario.setEmail(email);
         usuario.setTelefone(telefone);
         usuario.setSenha(senha);
+        usuario.setPhoto(photo); // <-- Salvando a string no banco
 
-        // Define "USER" como padrão se a requisição vier sem nenhuma role
         if (roles != null && !roles.isEmpty()) {
             usuario.getRoles().addAll(roles);
         } else {
